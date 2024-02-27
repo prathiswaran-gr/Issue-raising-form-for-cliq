@@ -38,7 +38,6 @@ function openPage(pageName, elmnt, color) {
   elmnt.style.backgroundColor = color;
 }
 
-// Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 
 function updateTracerouteDocumentContent() {
@@ -107,11 +106,11 @@ function sendResponse() {
   });
   showSubmittingAnimation("Submitting...");
 }
-// Get the element with id="defaultOpen" and click on it
 
 function moveToHelpTabContent() {
   document.getElementById("openHelpTab").click();
 }
+
 function validateForm() {
   var form = document.forms["formName"];
   var email = form["email"].value;
@@ -120,15 +119,6 @@ function validateForm() {
   var product_type = form["product_type"].value;
   var org_type = form["org_type"].value;
   var har = form["har"].value;
-
-  $.getJSON(
-    "https://ipinfo.io",
-    function (response) {
-      form["clientIp"].value = response.ip;
-    },
-    "jsonp"
-  );
-
   if (email == "") {
     alert("Email must be filled out");
     return false;
@@ -153,6 +143,7 @@ function validateForm() {
     alert("HAR files must be uploaded");
     return false;
   }
+
   sendResponse();
   return true;
 }

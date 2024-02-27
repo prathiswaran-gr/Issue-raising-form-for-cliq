@@ -1,7 +1,7 @@
 import java.io.*;
 
 import java.util.List;
-
+import java.util.Properties;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -21,14 +21,42 @@ import com.zc.component.mail.ZCMailContent;
 
 import java.util.ArrayList;
 
-
-
 @WebServlet(name = "SendEmailMain", urlPatterns = { "/server/SendEmail/sendemail" })
 @MultipartConfig
 
 public class SendEmailMain implements CatalystAdvancedIOHandler {
+    boolean DEBUG_MODE = false; // false for deployment server
+    ZCMailContent mailContent = ZCMailContent.getInstance();
+    ArrayList<File> attachments = new ArrayList<>();
+    ArrayList<String> toMailList = new ArrayList<>();
+
+    String clientEmail;
+    String fromMail;
+    String toMail;
+    String clientIp;
+    String domainType;
+    String productType;
+    String orgType;
+    String redirectUrl;
 
     public File inputStreamToFile(InputStream inputStream, String fileName) {
+        Properties prop = new Properties();
+        String configFileName = "server.config";
+        try (FileInputStream fileInputStream = new FileInputStream(configFileName)) {
+            prop.load(fileInputStream);
+        } catch (FileNotFoundException ex) {
+
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        fromMail = prop.getProperty("server.sender_email");
+        toMail = prop.getProperty("server.receiver_email");
+        if (DEBUG_MODE) {
+            redirectUrl = prop.getProperty("server.local_redirect_url");
+        } else {
+            redirectUrl = prop.getProperty("server.live_redirect_url");
+        }
 
         try {
 
@@ -52,16 +80,19 @@ public class SendEmailMain implements CatalystAdvancedIOHandler {
         }
     }
 
-    ZCMailContent mailContent = ZCMailContent.getInstance();
+    private String getClientIp(HttpServletRequest request) {
 
-    ArrayList<File> attachments = new ArrayList<>();
-    ArrayList<String> toMailList = new ArrayList<>();
-    String email = "";
-    String clientIp = "";
-    String domainType = "";
-    String productType = "";
-    String orgType = "";
-    String DEVELOPER_ACCOUNT = "prathis.waran+1@zohotrainees.com";
+        String remoteAddr = "";
+
+        if (request != null) {
+            remoteAddr = request.getHeader("X-FORWARDED-FOR");
+            if (remoteAddr == null || "".equals(remoteAddr)) {
+                remoteAddr = request.getRemoteAddr();
+            }
+        }
+
+        return remoteAddr;
+    }
 
     @SuppressWarnings("unchecked")
     @Override
@@ -82,15 +113,8 @@ public class SendEmailMain implements CatalystAdvancedIOHandler {
                         System.out.println(fieldName + " : " + fieldValue);
 
                         switch (fieldName) {
-                            case "clientIp":
-                                if (fieldValue == "" || fieldValue == null) {
-                                    clientIp = "127.0.0.0";
-                                    break;
-                                }
-                                clientIp = fieldValue;
-                                break;
                             case "email":
-                                email = fieldValue;
+                                clientEmail = fieldValue;
                                 break;
 
                             case "domain_type":
@@ -121,24 +145,24 @@ public class SendEmailMain implements CatalystAdvancedIOHandler {
                         attachments.add(outputFile);
                     }
                 }
-
-                mailContent.setFromEmail(email);
+                clientIp = getClientIp(request);
+                mailContent.setFromEmail(fromMail);
                 mailContent.setAttachments(attachments);
 
-                toMailList.add(DEVELOPER_ACCOUNT); // dev account
+                toMailList.add(toMail); // dev account
                 mailContent.setToEmailList(toMailList);
                 mailContent.setSubject("Customer raised an issue!!");
                 mailContent.setHtmlMode(true);
                 mailContent.setContent(
-                        "<h2>Customer Details</h2><table><tr><th>S.no</th><th>Details</th><th>Info</th></tr><tr><td>1</td><td>Client IP</td><td>"
-                                + clientIp + "</td></tr><tr><td>2</td><td>Email</td><td>" + email
+                        "<!DOCTYPE html><html lang='en'><head><style>table {font-family: arial, sans-serif;border-collapse: collapse;width: 100%;}td,th {border: 1px solid #dddddd;text-align: left;padding: 8px;}tr:nth-child(even) {background-color: #dddddd;}</style></head><body><h2>Client Details</h2><table><tr><th>S.no</th><th>Details</th><th>Information</th></tr><tr><td>1</td><td>Client IP</td><td>"
+                                + clientIp + "</td></tr><tr><td>2</td><td>Email</td><td>" + clientEmail
                                 + "</td></tr><tr><td>3</td><td>Domain</td><td>" + domainType
                                 + "</td></tr><tr><td>4</td><td>Product</td><td>" + productType
                                 + "</td></tr><tr><td>5</td><td>Organization</td><td>" + orgType
-                                + "</td></tr></table>");
+                                + "</td></tr></table></body></html>");
                 ZCMail.getInstance().sendMail(mailContent);
-
                 response.getWriter().write("Thanks for raising an issue");
+                response.sendRedirect(redirectUrl);
                 response.setStatus(200);
 
             } catch (FileUploadException e) {

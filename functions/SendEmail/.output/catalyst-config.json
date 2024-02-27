@@ -1,11 +1,11 @@
 {
-	"deployment": {
-		"name": "SendEmail",
-		"stack": "java17",
-		"type": "advancedio",
-		"env_variables": {}
-	},
-	"execution": {
-		"main": "SendEmailMain"
-	}
+  "deployment": {
+    "name": "SendEmail",
+    "stack": "java17",
+    "type": "advancedio",
+    "env_variables": {}
+  },
+  "execution": {
+    "main": "SendEmailMain"
+  }
 }

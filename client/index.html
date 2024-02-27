@@ -14,20 +14,22 @@
     ></script>
   </head>
   <body>
-    <button
-      class="tablink"
-      onclick="openPage('formTab', this, 'grey')"
-      id="defaultOpen"
-    >
-      Raise an issue
-    </button>
-    <button
-      class="tablink"
-      onclick="openPage('helpTab', this, 'grey'); getDocDetails();"
-      id="openHelpTab"
-    >
-      Help
-    </button>
+    <div class="navbar-position">
+      <button
+        class="tablink"
+        onclick="openPage('formTab', this, 'grey')"
+        id="defaultOpen"
+      >
+        Raise an issue
+      </button>
+      <button
+        class="tablink"
+        onclick="openPage('helpTab', this, 'grey'); getDocDetails();"
+        id="openHelpTab"
+      >
+        Help
+      </button>
+    </div>
 
     <div id="formTab" class="tabcontent">
       <form
@@ -38,7 +40,6 @@
         action="/server/SendEmail/sendemail"
         onsubmit="return validateForm()"
       >
-        <input type="hidden" id="clientIp" name="clientIp" />
         <fieldset>
           <legend>Enter your email address</legend>
           <input type="email" id="email" name="email" />
