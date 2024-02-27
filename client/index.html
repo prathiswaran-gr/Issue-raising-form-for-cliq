@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zoho</title>
+    <link rel="stylesheet" href="./main.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <button
+      class="tablink"
+      onclick="openPage('formTab', this, 'grey')"
+      id="defaultOpen"
+    >
+      Raise an issue
+    </button>
+    <button
+      class="tablink"
+      onclick="openPage('helpTab', this, 'grey'); getDocDetails();"
+      id="openHelpTab"
+    >
+      Help
+    </button>
+
+    <div id="formTab" class="tabcontent">
+      <form
+        id="form"
+        name="formName"
+        enctype="multipart/form-data"
+        method="post"
+        action="/server/SendEmail/sendemail"
+        onsubmit="return validateForm()"
+      >
+        <input type="hidden" id="clientIp" name="clientIp" />
+        <fieldset>
+          <legend>Enter your email address</legend>
+          <input type="email" id="email" name="email" />
+        </fieldset>
+
+        <fieldset>
+          <legend>
+            In which cliq domain you are using and facing an issue ?
+          </legend>
+          <select
+            name="domain_type"
+            id="domain_type"
+            onchange="updateTracerouteDocumentContent()"
+          >
+            <option value="com" selected="selected">com</option>
+            <option value="in">in</option>
+            <option value="au">au</option>
+            <option value="eu">eu</option>
+            <option value="jp">jp</option>
+            <option value="cn">cn</option>
+            <option value="uk">uk</option>
+            <option value="sa">sa</option>
+            <option value="ca">ca</option>
+          </select>
+        </fieldset>
+
+        <fieldset>
+          <legend>
+            Upload traceroute screenshots for all domains listed below
+            <span
+              title="Don't know how to traceroute ? Refer Help tab"
+              onclick="moveToHelpTabContent()"
+              >&#9432;</span
+            >
+          </legend>
+          <div id="tracerouteContent"></div>
+
+          <input
+            type="file"
+            id="traceroute-files"
+            name="tr-screenshots"
+            id="tr-screenshots"
+            accept="image/*"
+            multiple="multiple"
+          />
+        </fieldset>
+
+        <fieldset>
+          <legend>
+            Are you facing issue with particular zoho product or all zoho
+            products that you are using ?
+          </legend>
+          <label
+            ><input
+              type="radio"
+              name="product_type"
+              id="particualar_product"
+              value="particualar_product"
+            />
+            Particular Application</label
+          >
+          <label
+            ><input
+              type="radio"
+              name="product_type"
+              id="all_product"
+              value="all_product"
+            />
+            Everything</label
+          >
+        </fieldset>
+
+        <fieldset>
+          <legend>
+            Are you facing issue with whole organization or only particular/few
+            users ?
+          </legend>
+          <label
+            ><input
+              type="radio"
+              name="org_type"
+              id="whole_org"
+              value="whole_org"
+            />
+            Whole organization</label
+          >
+          <label
+            ><input
+              type="radio"
+              name="org_type"
+              id="few_users"
+              value="few_users"
+            />
+            Few users</label
+          >
+        </fieldset>
+        <fieldset>
+          <legend>
+            Upload HAR file for all domains to analyze what's going on behind
+            the scenes
+            <span
+              title="Don't know how to upload har files ? Refer Help tab"
+              onclick="moveToHelpTabContent()"
+              >&#9432;</span
+            >
+          </legend>
+          <input
+            type="file"
+            id="harfile"
+            name="har"
+            accept=".har"
+            multiple="multiple"
+          />
+        </fieldset>
+        <button type="submit" id="btn">Submit</button>
+      </form>
+    </div>
+
+    <div id="helpTab" class="tabcontent">
+      <div id="section"><div id="helpTabContent-tr"></div></div>
+      <div id="section"><div id="helpTabContent-har"></div></div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>

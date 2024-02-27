@@ -1,0 +1,36 @@
+{
+  "defaults": {
+    "project": 1,
+    "env": 1
+  },
+  "actives": {
+    "project": 1,
+    "env": 1
+  },
+  "projects": [
+    {
+      "idx": 1,
+      "id": "5680000000005068",
+      "name": "SendEmail",
+      "domain": {
+        "id": "50017963724",
+        "name": "sendemail-60027309186.development"
+      },
+      "timezone": "Asia/Kolkata",
+      "env": [
+        {
+          "idx": 1,
+          "id": "60027309186",
+          "name": "Development",
+          "type": 3
+        },
+        {
+          "idx": 2,
+          "id": "50017966886",
+          "name": "Production",
+          "type": 1
+        }
+      ]
+    }
+  ]
+}
