@@ -13,6 +13,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.json.simple.JSONObject;
 
 import com.catalyst.advanced.CatalystAdvancedIOHandler;
 
@@ -25,11 +26,11 @@ import java.util.ArrayList;
 @MultipartConfig
 
 public class SendEmailMain implements CatalystAdvancedIOHandler {
-    boolean DEBUG_MODE = false; // false for deployment server
+    boolean DEBUG_MODE = true; // false for deployment server
     ZCMailContent mailContent = ZCMailContent.getInstance();
     ArrayList<File> attachments = new ArrayList<>();
     ArrayList<String> toMailList = new ArrayList<>();
-
+    JSONObject responseData = new JSONObject();
     String clientEmail;
     String fromMail;
     String toMail;
@@ -40,23 +41,6 @@ public class SendEmailMain implements CatalystAdvancedIOHandler {
     String redirectUrl;
 
     public File inputStreamToFile(InputStream inputStream, String fileName) {
-        Properties prop = new Properties();
-        String configFileName = "server.config";
-        try (FileInputStream fileInputStream = new FileInputStream(configFileName)) {
-            prop.load(fileInputStream);
-        } catch (FileNotFoundException ex) {
-
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        fromMail = prop.getProperty("server.sender_email");
-        toMail = prop.getProperty("server.receiver_email");
-        if (DEBUG_MODE) {
-            redirectUrl = prop.getProperty("server.local_redirect_url");
-        } else {
-            redirectUrl = prop.getProperty("server.live_redirect_url");
-        }
 
         try {
 
@@ -97,6 +81,16 @@ public class SendEmailMain implements CatalystAdvancedIOHandler {
     @SuppressWarnings("unchecked")
     @Override
     public void runner(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        if (DEBUG_MODE) { // for localhost
+            redirectUrl = "http://localhost:3000/app/?success=true";
+            fromMail = ""; // from address
+            toMail = ""; // to address
+        } else { // Environment variable properties from catalyst
+            redirectUrl = System.getenv("live_redirect_url");
+            fromMail = System.getenv("sender_email");
+            toMail = System.getenv("receiver_email");
+        }
 
         if (ServletFileUpload.isMultipartContent(request)) {
             try {
@@ -161,7 +155,9 @@ public class SendEmailMain implements CatalystAdvancedIOHandler {
                                 + "</td></tr><tr><td>5</td><td>Organization</td><td>" + orgType
                                 + "</td></tr></table></body></html>");
                 ZCMail.getInstance().sendMail(mailContent);
-                response.getWriter().write("Thanks for raising an issue");
+                responseData.put("message", "Form submitted successfully");
+                response.setContentType("application/json");
+                response.getWriter().write(responseData.toString());
                 response.sendRedirect(redirectUrl);
                 response.setStatus(200);
 
