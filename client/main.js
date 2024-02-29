@@ -2,6 +2,11 @@ $(document).ready(() => {
   updateTracerouteDocumentContent();
   handleSuccess();
 });
+
+var domainName = "zoho";
+var domainExtension = "com";
+var routeCommand = "traceroute"; // for mac and linux by default
+
 var domainNames = {
   com: "<ol><li>cliq.zoho.com</li><li>accounts.zoho.com</li><li>static.zohocdn.com</li></ol>",
   in: "<ol><li>cliq.zoho.in</li><li>accounts.zoho.in</li><li>static.zohocdn.com</li></ol>",
@@ -16,11 +21,11 @@ var domainNames = {
 
 var traceRouteContent = {
   windows:
-    "<h3>Traceroute documentation for Windows</h3><div class='warning'>Note: Traceroute on Windows is performed using the 'tracert' command.</div><h4>Step 1: Open Command Prompt</h4><p>Open the Command Prompt on your Windows system. You can do this by searching for 'cmd' in the Start menu.</p><h4>Step 2: Use the Tracert Command</h4><p>Use the following command to tracert a domain:</p><pre><code>tracert [domain]</code></pre><p>Replace <code>[domain]</code> with the domain you want to trace. For example:</p><pre><code id='copy-content'>tracert cliq.zoho.com</code><span title='copy to clipboard' class='copy-icon'><img src='./icons/clipboard-regular.svg' alt='copy to clipboard' id='copy-icn' onclick='copyToClipboard()'></span></pre><h4>Step 3: Analyze the Output</h4><p>The output will display the route taken by packets to reach the destination.</h4>",
+    "<h3>Traceroute documentation for Windows</h3><div class='warning'>Note: Traceroute on Windows is performed using the 'tracert' command.</div><h4>Step 1: Open Command Prompt</h4><p>Open the Command Prompt on your Windows system. You can do this by searching for 'cmd' in the Start menu.</p><h4>Step 2: Use the Tracert Command</h4><p>Use the following command to tracert a domain:</p><pre><code>tracert [domain]</code></pre><p>Replace <code>[domain]</code> with the domain you want to trace. For example:</p><pre><code id='copy-content'></code><span title='copy to clipboard' class='copy-icon'><span id='copy-icn' onclick='copyToClipboard()'>&#128203</span></span></pre><h4>Step 3: Analyze the Output</h4><p>The output will display the route taken by packets to reach the destination.</h4>",
 
-  mac: "<h1>Traceroute Documentation</h1><h2>Introduction</h2><p>Traceroute is a network diagnostic tool that shows the route taken by packets across an IP network. It helps in identifying network delays and understanding the path taken by data packets.</p><h2>How to Traceroute a Domain</h2><h3>macOS</h3><h4>Step 1: Open Terminal</h4><p>Open the terminal on your macOS system. This can usually be done by searching for 'Terminal' in Spotlight or navigating to 'Applications' > 'Utilities' > 'Terminal.'</p><h4>Step 2: Use the Traceroute Command</h4><p>Use the following command to traceroute a domain:</p><pre><code>traceroute [domain]</code></pre><p>Replace <code>[domain]</code> with the domain you want to trace. For example:</p><pre><code id='copy-content'>traceroute cliq.zoho.com</code><span title='copy to clipboard' class='copy-icon'><img src='./icons/clipboard-regular.svg' alt='copy to clipboard' id='copy-icn' onclick='copyToClipboard()'></span></pre><h4>Step 3: Analyze the Output</h4><p>The output will display the route taken by packets to reach the destination. Each line represents a hop, and you can see the IP addresses and response times.</p>",
+  mac: "<h1>Traceroute Documentation</h1><h2>Introduction</h2><p>Traceroute is a network diagnostic tool that shows the route taken by packets across an IP network. It helps in identifying network delays and understanding the path taken by data packets.</p><h2>How to Traceroute a Domain</h2><h3>macOS</h3><h4>Step 1: Open Terminal</h4><p>Open the terminal on your macOS system. This can usually be done by searching for 'Terminal' in Spotlight or navigating to 'Applications' > 'Utilities' > 'Terminal.'</p><h4>Step 2: Use the Traceroute Command</h4><p>Use the following command to traceroute a domain:</p><pre><code>traceroute [domain]</code></pre><p>Replace <code>[domain]</code> with the domain you want to trace. For example:</p><pre><code id='copy-content'></code><span title='copy to clipboard' class='copy-icon'><span id='copy-icn' onclick='copyToClipboard()'>&#128203</span></span></pre><h4>Step 3: Analyze the Output</h4><p>The output will display the route taken by packets to reach the destination. Each line represents a hop, and you can see the IP addresses and response times.</p>",
   linux:
-    "<h1>Traceroute in Linux Documentation</h1><h2>Introduction</h2><p>Traceroute is a network diagnostic tool that shows the route taken by packets across an IP network. It helps in identifying network delays and understanding the path taken by data packets.</p><h2>How to Traceroute a Domain in Linux</h2><h3>Step 1: Open Terminal</h3><p>Open the terminal on your Linux system. This can usually be done by pressing <code>Ctrl + Alt + T</code>.</p><h3>Step 2: Use the Traceroute Command</h3><p>Use the following command to traceroute a domain:</p><pre><code>traceroute [domain]</code></pre><p>Replace <code>[domain]</code> with the domain you want to trace. For example:</p><pre><code id='copy-content'>traceroute cliq.zoho.com</code><span title='copy to clipboard' class='copy-icon'><img src='./icons/clipboard-regular.svg' alt='copy to clipboard' id='copy-icn' onclick='copyToClipboard()'></span></pre><h3>Step 3: Analyze the Output</h3><p>The output will display the route taken by packets to reach the destination. Each line represents a hop, and you can see the IP addresses and response times.</p>",
+    "<h1>Traceroute in Linux Documentation</h1><h2>Introduction</h2><p>Traceroute is a network diagnostic tool that shows the route taken by packets across an IP network. It helps in identifying network delays and understanding the path taken by data packets.</p><h2>How to Traceroute a Domain in Linux</h2><h3>Step 1: Open Terminal</h3><p>Open the terminal on your Linux system. This can usually be done by pressing <code>Ctrl + Alt + T</code>.</p><h3>Step 2: Use the Traceroute Command</h3><p>Use the following command to traceroute a domain:</p><pre><code>traceroute [domain]</code></pre><p>Replace <code>[domain]</code> with the domain you want to trace. For example:</p><pre><code id='copy-content'></code><span title='copy to clipboard' class='copy-icon'><span id='copy-icn' onclick='copyToClipboard()'>&#128203</span></span></pre><h3>Step 3: Analyze the Output</h3><p>The output will display the route taken by packets to reach the destination. Each line represents a hop, and you can see the IP addresses and response times.</p>",
 };
 var harFileContent = {
   chrome:
@@ -31,6 +36,27 @@ var harFileContent = {
   safari:
     "<h1>Downloading HAR File from Safari</h1><p>Follow the steps below to capture network traffic in Safari:</p><ol><li>Open Safari on your computer.</li><li>Go to the webpage for which you want to capture network traffic.</li><li>Enable the Developer menu in Safari. To do this, go to <strong>Safari</strong><strong>Preferences</strong><strong>Advanced</strong> and check the <strong>Show Develop menu in menu bar</strong> option.</li><li>Open the <strong>Develop</strong> menu in the menu bar and select <strong>Show Web Inspector</strong> or press <code>Option + Command + I</code>.</li><li>In the Web Inspector, go to the <strong>Network</strong> tab.</li><li>Reload the page.</li><li>Inspect the network requests and save the data using the options available in Safari's Web Inspector. Note: Safari might not provide a direct option to export as HAR, and you might need to manually save the data.</li></ol><p>Now you have captured network traffic data from Safari.</p>",
 };
+
+function updateDomain(extension) {
+  if (extension == "au") {
+    domainExtension = "com.au";
+  } else if (extension == "cn") {
+    domainExtension = "com.cn";
+  } else if (extension == "ca") {
+    domainName = "zohocloud";
+  } else if (extension == "in") {
+    domainExtension = "in";
+  } else if (extension == "eu") {
+    domainExtension = "eu";
+  } else if (extension == "jp") {
+    domainExtension = "jp";
+  } else if (extension == "uk") {
+    domainExtension = "uk";
+  } else if (extension == "sa") {
+    domainExtension = "sa";
+  }
+  getDocDetails();
+}
 
 function openPage(pageName, elmnt, color) {
   var i, tabcontent, tablinks;
@@ -49,9 +75,9 @@ function openPage(pageName, elmnt, color) {
 function copyToClipboard() {
   var copyText = document.getElementById("copy-content");
   navigator.clipboard.writeText(copyText.innerHTML);
-  document.getElementById("copy-icn").src = "./icons/check-solid.svg";
+  document.getElementById("copy-icn").innerHTML = "&#x2713;";
   setTimeout(() => {
-    document.getElementById("copy-icn").src = "./icons/clipboard-regular.svg";
+    document.getElementById("copy-icn").innerHTML = "&#128203";
   }, 1000);
 }
 
@@ -71,6 +97,7 @@ function updateTracerouteDocumentContent() {
       break;
     case "au":
       contentContainer.innerHTML = domainNames["au"];
+
       break;
 
     case "eu":
@@ -100,6 +127,7 @@ function updateTracerouteDocumentContent() {
       break;
     default:
   }
+  updateDomain(selectedOption);
 }
 
 function getParameterByName(name, url) {
@@ -211,6 +239,7 @@ function getDocDetails() {
   var har = document.getElementById("helpTabContent-har");
   if (platform.includes("Win32") || platform.includes("Win64")) {
     traceroute.innerHTML = traceRouteContent["windows"];
+    routeCommand = "tracert";
   } else if (platform.includes("Linux")) {
     traceroute.innerHTML = traceRouteContent["linux"];
   } else if (
@@ -220,6 +249,8 @@ function getDocDetails() {
   ) {
     traceroute.innerHTML = traceRouteContent["mac"];
   }
+  document.getElementById("copy-content").textContent =
+    routeCommand + " cliq." + domainName + "." + domainExtension;
 
   var browserType = getBrowserType();
   if (browserType == "chrome") {

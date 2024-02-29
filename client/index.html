@@ -4,18 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zoho</title>
-    <link rel="stylesheet" href="./styles.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
-    ></script>
+    <link rel="stylesheet" href="./main.css" />
   </head>
   <body>
     <div class="navbar-position">
@@ -74,7 +63,7 @@
           <legend>
             Upload traceroute screenshots for all domains listed below
             <span
-              title="Don't know how to traceroute ? Refer Help tab"
+              title="Don't know how to traceroute ?"
               onclick="moveToHelpTabContent()"
               >&#9432;</span
             >
@@ -144,7 +133,7 @@
           <legend>
             Upload HAR file to analyze what's going on behind the scenes
             <span
-              title="Don't know how to upload har files ? Refer Help tab"
+              title="Don't know how to upload har files ?"
               onclick="moveToHelpTabContent()"
               >&#9432;</span
             >
@@ -153,7 +142,6 @@
         </fieldset>
         <button type="submit" id="btn">Submit</button>
       </form>
-      <!-- <pre id="copy-content" onclick="copyToClipboard()"><span>hello</span></pre> -->
     </div>
 
     <div id="helpTab" class="tabcontent">
@@ -161,6 +149,21 @@
       <div id="section"><div id="helpTabContent-har"></div></div>
     </div>
 
-    <script src="index.js"></script>
+    <script
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      defer
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
+    ></script>
+    <script src="main.js"></script>
   </body>
 </html>

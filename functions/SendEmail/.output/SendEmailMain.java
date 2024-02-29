@@ -1,7 +1,6 @@
 import java.io.*;
 
 import java.util.List;
-import java.util.Properties;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 @MultipartConfig
 
 public class SendEmailMain implements CatalystAdvancedIOHandler {
-    boolean DEBUG_MODE = true; // false for deployment server
+    boolean DEBUG_MODE = false; // false for deployment server
     ZCMailContent mailContent = ZCMailContent.getInstance();
     ArrayList<File> attachments = new ArrayList<>();
     ArrayList<String> toMailList = new ArrayList<>();
