@@ -3,7 +3,11 @@
     "name": "SendEmail",
     "stack": "java17",
     "type": "advancedio",
-    "env_variables": {}
+    "env_variables": {
+      "live_redirect_url": "https://sendemail-60027309186.development.catalystserverless.in/app/home.html?success=true",
+      "sender_email": "prathis.waran@zohotrainees.com",
+      "receiver_email": "prathis.waran+1@zohotrainees.com"
+    }
   },
   "execution": {
     "main": "SendEmailMain"

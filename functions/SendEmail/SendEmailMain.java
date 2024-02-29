@@ -39,11 +39,11 @@ public class SendEmailMain implements CatalystAdvancedIOHandler {
     String orgType;
     String redirectUrl;
 
-    public File inputStreamToFile(InputStream inputStream, String fileName) {
+    public File inputStreamToFile(InputStream inputStream, String fileName, String extension) {
 
         try {
 
-            File tempFile = File.createTempFile(fileName, ".tmp");
+            File tempFile = File.createTempFile(fileName, "."+extension);
 
             tempFile.deleteOnExit();
 
@@ -77,12 +77,22 @@ public class SendEmailMain implements CatalystAdvancedIOHandler {
         return remoteAddr;
     }
 
+    private String getFileExtension(String fileName) {
+        String format = "tmp";
+        int index = fileName.lastIndexOf(".");
+        if (index > 0) {
+            format = fileName.substring(index + 1);
+            format = format.toLowerCase();
+        }
+        return format;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public void runner(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         if (DEBUG_MODE) { // for localhost
-            redirectUrl = "http://localhost:3000/app/?success=true";
+            redirectUrl = "http://localhost:3000/app/home.html?success=true";
             fromMail = ""; // from address
             toMail = ""; // to address
         } else { // Environment variable properties from catalyst
@@ -133,8 +143,9 @@ public class SendEmailMain implements CatalystAdvancedIOHandler {
 
                     } else {
                         String fileName = item.getName();
+                        String fileExtension = getFileExtension(fileName);
                         InputStream fileContent = item.getInputStream();
-                        File outputFile = inputStreamToFile(fileContent, fileName);
+                        File outputFile = inputStreamToFile(fileContent, fileName,fileExtension);
                         attachments.add(outputFile);
                     }
                 }

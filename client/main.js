@@ -1,4 +1,5 @@
 $(document).ready(() => {
+  window.alert = () => {};
   updateTracerouteDocumentContent();
   handleSuccess();
 });
@@ -34,7 +35,7 @@ var harFileContent = {
   firefox:
     "<h1>Downloading HAR File from Mozilla Firefox</h1><p>Follow the steps below to download a HAR file from the Mozilla Firefox browser:</p><ol><li>Open Mozilla Firefox on your computer.</li><li>Go to the webpage for which you want to capture network traffic.</li><li>Right-click anywhere on the page and select <strong>Inspect Element</strong> or press <code>Ctrl + Shift + I</code>.</li><li>Go to the <strong>Network</strong> tab in the Developer Tools.</li><li>Reload the page (you can press <code>Ctrl + R</code> or click the reload icon).</li><li>Click on the <strong>Export</strong> button (a download icon) to save the captured network traffic as a HAR file.</li></ol><p>Now you have successfully downloaded the HAR file from the Mozilla Firefox browser.</p>",
   safari:
-    "<h1>Downloading HAR File from Safari</h1><p>Follow the steps below to capture network traffic in Safari:</p><ol><li>Open Safari on your computer.</li><li>Go to the webpage for which you want to capture network traffic.</li><li>Enable the Developer menu in Safari. To do this, go to <strong>Safari</strong><strong>Preferences</strong><strong>Advanced</strong> and check the <strong>Show Develop menu in menu bar</strong> option.</li><li>Open the <strong>Develop</strong> menu in the menu bar and select <strong>Show Web Inspector</strong> or press <code>Option + Command + I</code>.</li><li>In the Web Inspector, go to the <strong>Network</strong> tab.</li><li>Reload the page.</li><li>Inspect the network requests and save the data using the options available in Safari's Web Inspector. Note: Safari might not provide a direct option to export as HAR, and you might need to manually save the data.</li></ol><p>Now you have captured network traffic data from Safari.</p>",
+    "<h1>Downloading HAR File from Safari</h1><p>Follow the steps below to capture network traffic in Safari:</p><ol><li>Open Safari on your computer.</li><li>Go to the webpage for which you want to capture network traffic.</li><li>Enable the Developer menu in Safari. To do this, go to <strong>Safari</strong> -> <strong>Preferences</strong> -> <strong>Advanced</strong> and check the <strong>Show Develop menu in menu bar</strong> option.</li><li>Open the <strong>Develop</strong> menu in the menu bar and select <strong>Show Web Inspector</strong> or press <code>Option + Command + I</code>.</li><li>In the Web Inspector, go to the <strong>Network</strong> tab.</li><li>Reload the page.</li><li>Inspect the network requests and save the data using the options available in Safari's Web Inspector. Note: Safari might not provide a direct option to export as HAR, and you might need to manually save the data.</li></ol><p>Now you have captured network traffic data from Safari.</p>",
 };
 
 function updateDomain(extension) {
@@ -175,7 +176,7 @@ function sendResponse() {
 }
 
 function getBrowserType() {
-  if (navigator.userAgent.indexOf("Edg") != -1) {
+  if (navigator.userAgent.indexOf("Edge") != -1) {
     return "edge";
   } else if (navigator.userAgent.indexOf("Chrome") != -1) {
     return "chrome";
@@ -193,42 +194,6 @@ function moveToHelpTabContent() {
   document.getElementById("openHelpTab").click();
 }
 
-function validateForm() {
-  var form = document.forms["formName"];
-  var email = form["email"].value;
-  var domain_type = form["domain_type"].value;
-  var screenshots = form["tr-screenshots"].value;
-  var product_type = form["product_type"].value;
-  var org_type = form["org_type"].value;
-  var har = form["har"].value;
-  if (email == "") {
-    alert("Email must be filled out");
-    return false;
-  }
-  if (domain_type == "") {
-    alert("Domain type must be filled out");
-    return false;
-  }
-  if (screenshots == "") {
-    alert("Traceroute screenshots must be uploaded");
-    return false;
-  }
-  if (product_type == "") {
-    alert("Product type must be filled out");
-    return false;
-  }
-  if (org_type == "") {
-    alert("Organization type must be filled out");
-    return false;
-  }
-  if (har == "") {
-    alert("HAR files must be uploaded");
-    return false;
-  }
-
-  sendResponse();
-  return true;
-}
 function showSubmittingAnimation(buttonText) {
   var btn = document.getElementById("btn");
   btn.textContent = buttonText;
